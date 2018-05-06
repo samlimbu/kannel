@@ -11,6 +11,9 @@ import com.sam.sis.dao.MessagesDAO;
 import com.sam.sis.dao.NumberDAO;
 import com.sam.sis.entity.CampaignDetail;
 import com.sam.sis.entity.Numbers;
+import com.sam.sis.service.KannelService;
+import java.io.IOException;
+import java.net.ProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -36,6 +41,8 @@ public class ClientAPIController {
     NumberDAO numberDAO;
     @Autowired
     CampaignDetailDAO campaignDAO;
+    @Autowired
+    KannelService kannelService;
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
@@ -50,6 +57,14 @@ public class ClientAPIController {
     @RequestMapping(value = "/number", method = RequestMethod.GET)
     public @ResponseBody
     List<Numbers> getNumber() {
+        try {
+            kannelService.getInfo();
+        } catch (ProtocolException ex) {
+            Logger.getLogger(ClientAPIController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ClientAPIController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         List<Numbers> numbers = numberDAO.getAll();
         System.out.println(numbers);
         //do business logic
