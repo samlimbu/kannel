@@ -5,6 +5,7 @@
  */
 package com.sam.sis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -63,6 +64,8 @@ public class CampaignDetail implements Serializable {
     private Boolean deleted;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "campaignDetail")
     private Action action;
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "campaignId")
     private Collection<Numbers> numbersCollection;
 

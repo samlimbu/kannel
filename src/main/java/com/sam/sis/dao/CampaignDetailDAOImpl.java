@@ -5,7 +5,7 @@
  */
 package com.sam.sis.dao;
 
-import com.sam.sis.entity.Messages;
+import com.sam.sis.entity.CampaignDetail;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * @author Sam
  */
 @Repository
-public class CampaignDetailDAOImpl extends GenericDAOImpl<Messages> implements CampaignDetailDAO<Messages>{
+public class CampaignDetailDAOImpl extends GenericDAOImpl<CampaignDetail> implements CampaignDetailDAO<CampaignDetail>{
     
 }

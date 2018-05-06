@@ -9,6 +9,6 @@ package com.sam.sis.dao;
  *
  * @author Sam
  */
-public interface CampaignDetailDAO<Messages> extends GenericDAO<Messages> {
+public interface CampaignDetailDAO<CampaignDetail> extends GenericDAO<CampaignDetail> {
     
 }
