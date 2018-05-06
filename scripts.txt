@@ -1,0 +1,18 @@
+create database kannel;
+
+create table campaign_details(
+	id int(32) primary key AUTO_INCREMENT,
+ 	campaign_name varchar(32), 
+	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	schedule_date TIMESTAMP,
+	SMS varchar(128),
+   	 status tinyint(1),
+ 	   deleted tinyint(1) default 0
+);
+
+create table campaign_action(
+   campaign_id int(32) PRIMARY key,
+    action tinyint(1),
+    foreign key (campaign_id) REFERENCES campaign_details(id)
+);
+

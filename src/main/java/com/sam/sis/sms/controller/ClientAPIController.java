@@ -5,10 +5,12 @@
  */
 package com.sam.sis.sms.controller;
 
+import com.sam.sis.dao.CampaignDetailDAO;
 import com.sam.sis.entity.Messages;
-import com.sam.sis.sms.MessagesDAO;
-import com.sam.sis.sms.NumberDAO;
-import com.sam.sis.sms.Numbers;
+import com.sam.sis.dao.MessagesDAO;
+import com.sam.sis.dao.NumberDAO;
+import com.sam.sis.entity.CampaignDetail;
+import com.sam.sis.entity.Numbers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -34,7 +35,7 @@ public class ClientAPIController {
     @Autowired
     NumberDAO numberDAO;
     @Autowired
-    TwilioService twilioService;
+    CampaignDetailDAO campaignDAO;
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
@@ -43,27 +44,7 @@ public class ClientAPIController {
         return ResponseEntity.ok(numberDAO.getAll());
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/post/{smsmessage}", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Messages> addNewWorker(@RequestBody List<Numbers> numberList, @PathVariable String smsmessage) {
-        //System.out.println(jsonArr);
-        for(Numbers item: numberList){
-            twilioService = new TwilioService();
-            String sid = twilioService.postSms(smsmessage, item);
-            Messages message = new Messages();
-            message.setBody(smsmessage);
-            message.setSid(sid);
-            
-            Numbers num = new Numbers();
-            num.setId(item.getId());
-            
-            message.setNumberId(num);
-            messageDAO.insert(message);
-        
-        }
-        return messageDAO.getAll();
-    }
+    
 
     @CrossOrigin
     @RequestMapping(value = "/number", method = RequestMethod.GET)
@@ -73,6 +54,16 @@ public class ClientAPIController {
         System.out.println(numbers);
         //do business logic
         return numbers;
+    }
+    
+    @CrossOrigin
+    @RequestMapping(value = "/campaign", method = RequestMethod.GET)
+    public @ResponseBody
+    List<CampaignDetail> getCampaign() {
+        List<CampaignDetail> campaignList = campaignDAO.getAll();
+        System.out.println(campaignList);
+        //do business logic
+        return campaignList;
     }
 
     @CrossOrigin
@@ -89,24 +80,8 @@ public class ClientAPIController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody
     Messages udpateMessage(@RequestBody Messages messagebody) {
-        System.out.println(messagebody.getNumberId().getNumber());
-        Messages message = new Messages();
-        message.setSid(messagebody.getSid());
-        message.setBody(messagebody.getBody());
-        message.setStatus(messagebody.getStatus());
-        /*
-        Numbers numbers = new Numbers();
-        numbers.setId(messagebody.getNumberId().getId());
-        numbers.setNumber(messagebody.getNumberId().getNumber());
-        
-         */
-        message.setNumberId(messagebody.getNumberId());
-
-        //message.setNumberId(messagebody.getNumberId());
-        System.out.print("message getNumberId" + messagebody.getNumberId());
-
-        messageDAO.update(message);
-        return message;
+       
+        return messagebody;
     }
 
     @CrossOrigin

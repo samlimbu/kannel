@@ -6,7 +6,7 @@
 package com.sam.sis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sam.sis.sms.Numbers;
+import com.sam.sis.entity.Numbers;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
