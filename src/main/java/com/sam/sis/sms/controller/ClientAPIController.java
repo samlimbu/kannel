@@ -12,6 +12,7 @@ import com.sam.sis.dao.NumberDAO;
 import com.sam.sis.entity.CampaignDetail;
 import com.sam.sis.entity.Numbers;
 import com.sam.sis.service.KannelService;
+import com.sam.sis.service.LoadtoSql;
 import java.io.IOException;
 import java.net.ProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,10 @@ public class ClientAPIController {
     CampaignDetailDAO campaignDAO;
     @Autowired
     KannelService kannelService;
-
+    @Autowired
+    LoadtoSql loadtoSql;
+    
+    
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity index() {
@@ -57,6 +61,7 @@ public class ClientAPIController {
     @RequestMapping(value = "/number", method = RequestMethod.GET)
     public @ResponseBody
     List<Numbers> getNumber() {
+        loadtoSql.load();
         try {
             kannelService.getInfo();
         } catch (ProtocolException ex) {

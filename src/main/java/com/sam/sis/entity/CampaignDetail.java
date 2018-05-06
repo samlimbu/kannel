@@ -46,12 +46,12 @@ public class CampaignDetail implements Serializable {
     @Column(name = "campaign_name")
     private String campaignName;
     @Basic(optional = false)
-    @NotNull
+   
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @NotNull
+   
     @Column(name = "schedule_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date scheduleDate;

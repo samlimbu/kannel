@@ -5,12 +5,17 @@
  */
 package com.sam.sis.sms.controller;
 
+import com.sam.sis.dao.CampaignDetailDAO;
+import com.sam.sis.dao.CampaignDetailDAOImpl;
+import com.sam.sis.entity.CampaignDetail;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,19 +23,34 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping(value = "/upload")
+@RequestMapping
 //Max uploaded file size (here it is 20 MB)
 @MultipartConfig(fileSizeThreshold = 20971520)
 public class FileUploaderService {
-
-    @RequestMapping
+   
+    @Autowired
+    CampaignDetailDAO campaignDAO;
+    
+    @RequestMapping(value = "/upload")
     public String uploadFile(
-            @RequestParam("uploadedFile") MultipartFile uploadedFileRef) {
+            @RequestParam("uploadedFile") MultipartFile uploadedFileRef, 
+            @RequestParam("campaignName") String campaignName,
+            @RequestParam("smsText") String smsText) {
+    //inert into campaign
+        CampaignDetail campaign = new CampaignDetail();
+        campaign.setCampaignName(campaignName);
+        campaign.setSms(smsText);
+        //campaign schedule date;
+        
+    campaignDAO.insert(campaign);
+        
     // Get name of uploaded file.
     String fileName = uploadedFileRef.getOriginalFilename();
-
+    //test
+    
+    
     // Path where the uploaded file will be stored.
-    String path = "/uploadedFiles" + fileName;
+    String path = "C:\\Users\\Sam\\Documents\\" + fileName;
 
     // This buffer will store the data read from 'uploadedFileRef'
     byte[] buffer = new byte[1000];

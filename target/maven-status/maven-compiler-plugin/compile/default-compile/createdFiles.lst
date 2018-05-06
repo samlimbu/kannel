@@ -4,6 +4,7 @@ com\sam\sis\entity\Numbers.class
 com\sam\sis\entity\CampaignDetail.class
 com\sam\sis\dao\NumberDAOImpl.class
 com\sam\sis\dao\CampaignDetailDAOImpl.class
+com\sam\sis\config\ViewConfig.class
 com\sam\sis\dao\CampaignActionDAOImpl.class
 com\sam\sis\sms\controller\FileUploaderService.class
 com\sam\sis\entity\Action.class
@@ -16,3 +17,4 @@ com\sam\sis\service\KannelService.class
 com\sam\sis\dao\GenericDAO.class
 com\sam\sis\dao\NumberDAO.class
 com\sam\sis\dao\MessagesDAOImpl.class
+com\sam\sis\service\LoadtoSql.class
