@@ -47,7 +47,7 @@ public class LoadtoSql {
             //windows
             //statement1.executeUpdate( "LOAD DATA LOCAL INFILE 'C:\\Users\\senthil_sivasamy\\Documents\\log.txt' INTO TABLE  trpwatchlog_tb FIELDS TERMINATED BY ' ' LINES TERMINATED BY '\\n'");
             //linux  ( " LOAD DATA LOCAL INFILE '/home/username/logname.log' INTO TABLE  logname.log FIELDS TERMINATED BY ' ' LINES TERMINATED BY '\\n'");
-            statement.executeUpdate( "LOAD DATA LOCAL INFILE 'C:\\Users\\Sam\\Documents\\numbers.csv' INTO TABLE kannel.numbers FIELDS TERMINATED BY ' ' LINES TERMINATED BY '\\n'");
+            statement.executeUpdate( "LOAD DATA LOCAL INFILE 'C:/Users/Sam/Documents/numbers.csv' INTO TABLE kannel.numbers FIELDS TERMINATED BY ' ' LINES TERMINATED BY '\\n'");
 
             
            

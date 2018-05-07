@@ -19,11 +19,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class KannelService {
      private static HttpURLConnection con;
-
-    public static void getInfo() throws MalformedURLException,
+     //String kannelUrl = "http://localhost:13013/cgi-bin/sendsms?username=unifun&password=unifun&from=100&to=2121&text=hellofrom";
+     String responseKannel;
+    public int sendRequest(String number, String smstext) throws MalformedURLException,
             ProtocolException, IOException {
 
-        String url = "http://www.imdb.com";
+        String url = "http://localhost:13013/cgi-bin/sendsms?username=unifun&password=unifun&from=100&to="+number+"&text=" + smstext;
 
         try {
 
@@ -46,11 +47,17 @@ public class KannelService {
                 }
             }
 
-            System.out.println(content.toString());
-
+            
+            responseKannel = content.toString();
+            responseKannel = responseKannel.substring(0, 1);
+            System.out.println("response is" + responseKannel);
         } finally {
             
             con.disconnect();
         }
+        
+        int result = Integer.parseInt(responseKannel);
+        System.out.println("REsponse is" + result);
+        return result;
     }
 }

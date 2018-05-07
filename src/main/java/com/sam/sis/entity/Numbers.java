@@ -5,11 +5,13 @@
  */
 package com.sam.sis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,6 +35,11 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Numbers.findAll", query = "SELECT n FROM Numbers n")})
 public class Numbers implements Serializable {
 
+    @Column(name = "sendstatus")
+    private Integer sendstatus;
+    @Column(name = "delivery_response")
+    private Integer deliveryResponse;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,25 +47,23 @@ public class Numbers implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Column(name = "mobile_number")
-    private Integer mobileNumber;
+    private String mobileNumber;
     @Size(max = 128)
     @Column(name = "sms_text")
     private String smsText;
     @Basic(optional = false)
-    @NotNull
+
     @Column(name = "sent_date_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date sentDateTime;
-    @Column(name = "sendstatus")
-    private Boolean sendstatus;
     @Basic(optional = false)
-    @NotNull
+
     @Column(name = "delivery_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deliveryDatetime;
-    @Column(name = "delivery_response")
-    private Boolean deliveryResponse;
     @JoinColumn(name = "campaign_id", referencedColumnName = "id")
+    
+    
     @ManyToOne
     private CampaignDetail campaignId;
 
@@ -83,11 +88,11 @@ public class Numbers implements Serializable {
         this.id = id;
     }
 
-    public Integer getMobileNumber() {
+    public String getMobileNumber() {
         return mobileNumber;
     }
 
-    public void setMobileNumber(Integer mobileNumber) {
+    public void setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
     }
 
@@ -107,13 +112,6 @@ public class Numbers implements Serializable {
         this.sentDateTime = sentDateTime;
     }
 
-    public Boolean getSendstatus() {
-        return sendstatus;
-    }
-
-    public void setSendstatus(Boolean sendstatus) {
-        this.sendstatus = sendstatus;
-    }
 
     public Date getDeliveryDatetime() {
         return deliveryDatetime;
@@ -123,11 +121,11 @@ public class Numbers implements Serializable {
         this.deliveryDatetime = deliveryDatetime;
     }
 
-    public Boolean getDeliveryResponse() {
+    public Integer getDeliveryResponse() {
         return deliveryResponse;
     }
 
-    public void setDeliveryResponse(Boolean deliveryResponse) {
+    public void setDeliveryResponse(Integer deliveryResponse) {
         this.deliveryResponse = deliveryResponse;
     }
 
@@ -161,7 +159,17 @@ public class Numbers implements Serializable {
 
     @Override
     public String toString() {
-        return "com.sam.sis.entity.Numbers[ id=" + id + " ]";
+        return "{id:" + id +","+"campaignName:" + campaignId.getCampaignName() +","+  "}";
     }
+
+    public Integer getSendstatus() {
+        return sendstatus;
+    }
+
+    public void setSendstatus(Integer sendstatus) {
+        this.sendstatus = sendstatus;
+    }
+
+
     
 }

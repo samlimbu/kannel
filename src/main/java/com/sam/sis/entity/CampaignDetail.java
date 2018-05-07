@@ -7,8 +7,8 @@ package com.sam.sis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,28 +38,28 @@ public class CampaignDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     @Size(max = 32)
-    @Column(name = "campaign_name")
+    @Column(name = "campaign_name", updatable=false)
     private String campaignName;
     @Basic(optional = false)
-   
+
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-   
+  
     @Column(name = "schedule_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date scheduleDate;
     @Size(max = 128)
-    @Column(name = "SMS")
+    @Column(name = "SMS", updatable=false)
     private String sms;
     @Column(name = "status")
-    private Boolean status;
+    private Integer status;
     @Column(name = "deleted")
     private Boolean deleted;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "campaignDetail")
@@ -67,7 +67,7 @@ public class CampaignDetail implements Serializable {
     
     @JsonIgnore
     @OneToMany(mappedBy = "campaignId")
-    private Collection<Numbers> numbersCollection;
+    private List<Numbers> numbersList;
 
     public CampaignDetail() {
     }
@@ -122,11 +122,11 @@ public class CampaignDetail implements Serializable {
         this.sms = sms;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -146,12 +146,12 @@ public class CampaignDetail implements Serializable {
         this.action = action;
     }
 
-    public Collection<Numbers> getNumbersCollection() {
-        return numbersCollection;
+    public List<Numbers> getNumbersList() {
+        return numbersList;
     }
 
-    public void setNumbersCollection(Collection<Numbers> numbersCollection) {
-        this.numbersCollection = numbersCollection;
+    public void setNumbersList(List<Numbers> numbersList) {
+        this.numbersList = numbersList;
     }
 
     @Override

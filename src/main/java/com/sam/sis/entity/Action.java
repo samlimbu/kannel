@@ -34,7 +34,7 @@ public class Action implements Serializable {
     @Column(name = "campaign_id")
     private Integer campaignId;
     @Column(name = "action")
-    private Boolean action;
+    private int action;
     @JoinColumn(name = "campaign_id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private CampaignDetail campaignDetail;
@@ -54,11 +54,11 @@ public class Action implements Serializable {
         this.campaignId = campaignId;
     }
 
-    public Boolean getAction() {
+    public int getAction() {
         return action;
     }
 
-    public void setAction(Boolean action) {
+    public void setAction(int action) {
         this.action = action;
     }
 

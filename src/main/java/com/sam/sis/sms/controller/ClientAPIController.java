@@ -27,6 +27,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -46,36 +47,21 @@ public class ClientAPIController {
     KannelService kannelService;
     @Autowired
     LoadtoSql loadtoSql;
-    
-    
-    @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity index() {
-
-        return ResponseEntity.ok(numberDAO.getAll());
-    }
-
-    
+        
 
     @CrossOrigin
     @RequestMapping(value = "/number", method = RequestMethod.GET)
     public @ResponseBody
     List<Numbers> getNumber() {
-        loadtoSql.load();
-        try {
-            kannelService.getInfo();
-        } catch (ProtocolException ex) {
-            Logger.getLogger(ClientAPIController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(ClientAPIController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+          Numbers num = new Numbers();
+           
+       
         List<Numbers> numbers = numberDAO.getAll();
-        System.out.println(numbers);
-        //do business logic
+   
         return numbers;
     }
     
+       
     @CrossOrigin
     @RequestMapping(value = "/campaign", method = RequestMethod.GET)
     public @ResponseBody
@@ -85,35 +71,24 @@ public class ClientAPIController {
         //do business logic
         return campaignList;
     }
-
-    @CrossOrigin
-    @RequestMapping(value = "/message", method = RequestMethod.GET)
-    public @ResponseBody
-    List<Messages> getMessage() {
-        List<Messages> messages = messageDAO.getAll();
-        System.out.println(messages);
-        //do business logic
-        return messages;
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public @ResponseBody
-    Messages udpateMessage(@RequestBody Messages messagebody) {
-       
-        return messagebody;
-    }
+    
+ 
+   
 
     @CrossOrigin
     @RequestMapping(value = "/delivery")
-    public void deliveryWebHook(@RequestParam(value = "MessageSid") String messageSid,
-            @RequestParam(value = "MessageStatus") String messageStatus) {
-        System.out.println("SID: " + messageSid + ", Status:" + messageStatus);
-        Messages message = new Messages();
-        message.setSid(messageSid);
-        message.setStatus(messageStatus);
-        messageDAO.update(message);
+    public void deliveryWebHook(@RequestParam(value = "CampaignId") int campaignId,
+            @RequestParam(value = "MSISDN") String mobileNumber,
+            @RequestParam(value = "Response") int deliveryResponse) {
+            
         
+            Numbers number = new Numbers();
+            
+            CampaignDetail campaign = new CampaignDetail();
+            campaign.setId(campaignId);
+            number.setCampaignId(campaign);
+            number.setDeliveryResponse(deliveryResponse);
+            numberDAO.update(number);
      
     }
 

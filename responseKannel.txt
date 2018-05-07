@@ -1,0 +1,2 @@
+3: Queued for later delivery
+0: Accepted for delivery
