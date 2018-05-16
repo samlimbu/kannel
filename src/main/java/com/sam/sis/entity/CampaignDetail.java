@@ -36,6 +36,12 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "CampaignDetail.findAll", query = "SELECT c FROM CampaignDetail c")})
 public class CampaignDetail implements Serializable {
 
+    @Column(name = "status")
+    private Integer status;
+    @Size(max = 64)
+    @Column(name = "file_path", updatable = false)
+    private String filePath;
+
     private static final long serialVersionUID = 1L;
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,8 +64,6 @@ public class CampaignDetail implements Serializable {
     @Size(max = 128)
     @Column(name = "SMS", updatable=false)
     private String sms;
-    @Column(name = "status")
-    private Integer status;
     @Column(name = "deleted")
     private Boolean deleted;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "campaignDetail")
@@ -122,13 +126,6 @@ public class CampaignDetail implements Serializable {
         this.sms = sms;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 
     public Boolean getDeleted() {
         return deleted;
@@ -177,6 +174,23 @@ public class CampaignDetail implements Serializable {
     @Override
     public String toString() {
         return "com.sam.sis.entity.CampaignDetail[ id=" + id + " ]";
+    }
+
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
     
 }

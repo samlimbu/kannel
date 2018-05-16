@@ -1,4 +1,10 @@
 $(document).ready(function () {
+  $("#form").on('submit', function (e) {
+    showMessage("Submitted Form");
+    $("#campaign-form").trigger('reset');
+    $("#campaign-form").css("visibility", "hidden");
+    
+ });
      $('#click-button').click(function () {
           $("#campaign-form").css("visibility", "visible");
           $('#cancel-button').click(function(){
@@ -25,60 +31,37 @@ function AutoReload() {
 
      }, 5000);
 } 
-
-function log(message) {
-     document.getElementById("logs").innerHTML = message;
+function showMessage(text){
+  $('#message').html(text); 
+  setTimeout(function(){ 
+    $('#message').html(""); 
+  }, 3000);
 }
 
-function postAjax(message, data, done) {
 
-     console.log('DATA[] post: ' + data);
-     $.ajax({
-          headers: {
-               'Access-Control-Allow-Origin': '*',
-               'Access-Control-Allow-Headers': 'Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With',
-               'Access-Control-Allow-Methods': 'GET, PUT, POST'
-          },
-          crossDomain: true,
-          type: "POST",
-          contentType: "application/json",
-          url: "http://localhost:8080/sms/api/post/" + message,
-          data: JSON.stringify(data),
-          dataType: 'json',
-          timeout: 100000,
-          success: function (messageData) {
-               done(messageData);
-          },
-          error: function (e) {
-               console.log("ERROR: ", e);
-               display(e);
-          },
-          done: function (e) {
-               console.log("DONE");
-
-          }
-     });
-
-}
 function getCampaign() {
 
      $.ajax({
           headers: {
+            
                'Access-Control-Allow-Origin': '*',
                'Access-Control-Allow-Headers': 'Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With',
-               'Access-Control-Allow-Methods': 'GET, PUT, POST'
+               'Access-Control-Allow-Methods': 'GET, PUT, POST',
           },
           crossDomain: true,
           type: "GET",
-          url: "http://localhost:8080/sms/api/campaign",
+          dataType: "json",
+          processData: "false",
 
+          url: "http://localhost:8080/sms/api/campaign",
+         
           timeout: 100000,
           success: function (data) {
                displayData(data);
           },
           error: function (e) {
                console.log("ERROR: ", e);
-               display(e);
+               document.getElementById("logs").innerHTML = e;
           },
           done: function (e) {
                console.log("DONE");
@@ -89,7 +72,7 @@ function getCampaign() {
 }
 
 function displayData(data) {
-     var dataList = JSON.parse(data);
+     var dataList = data;
 
      var td = '<table class="campaign-table"><th>ID</th><th>Campaign Name</th><th>Created Date</th><th>Schedule Date</th><th>SMS Text</th><th>Status</th><th>Actions</th>';
      for (var i = 0; i < dataList.length; i++) {
@@ -100,7 +83,6 @@ function displayData(data) {
                
                "<td>"+"<a target='_blank' href="+localhostUrl+"/CsvtoSql?"+"campaignId="+dataList[i].id + 
                "&smsText="+dataList[i].sms+">"+"Start</a>"+"<a target='_blank' href="+localhostUrl+"/stopCampaign?"+"campaignId="+dataList[i].id+ ">" +"</a>"+"<a target='_blank' href="+localhostUrl+"/deleteCampaign?"+"campaignId="+dataList[i].id+">"+" Delete</a>"+"</td>"
-               
                + "</tr>";
           }
      }
@@ -108,7 +90,7 @@ function displayData(data) {
 }
 
 function timeConverter(UNIX_timestamp){
-     var a = new Date(UNIX_timestamp * 1000);
+     var a = new Date(UNIX_timestamp * 1);
      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
      var year = a.getFullYear();
      var month = months[a.getMonth()];
@@ -116,6 +98,6 @@ function timeConverter(UNIX_timestamp){
      var hour = a.getHours();
      var min = a.getMinutes();
      var sec = a.getSeconds();
-     var time = date + ' '+ month + ' ' + year; // + ' ' + hour + ':' + min + ':' + sec ;
+     var time = date + ' '+ month + ' ' + year + ' ' + hour + ':' + min;// + ':' + sec ;
      return time;
    }

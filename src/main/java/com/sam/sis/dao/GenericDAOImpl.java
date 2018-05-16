@@ -50,11 +50,23 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
 
     @Override
     public void update(T t) {
-         session = sessionFactory.openSession();
-         transaction = session.beginTransaction();
+        try  {
+
+            session = sessionFactory.getCurrentSession();
+            System.out.println("------------------------------------------------------getcurseesio");
+        }   catch (HibernateException e)      {
+           
+            session = sessionFactory.openSession();
+            System.out.println("----open session--------------------" + e.getMessage());
+            
+        }
+        finally{         
+            transaction = session.beginTransaction();
+        
          session.update(t);
          transaction.commit();
          session.close();
+        }
     }
 
     @Override
@@ -86,7 +98,15 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T> {
     @Override
     public T getbyId(int id) {
         //session = sessionFactory.getCurrentSession();
-        session = sessionFactory.openSession();
+          try  {
+        
+            session = sessionFactory.getCurrentSession();
+            System.out.println("------------------------------------------------------getcurseesio");
+        }   catch (HibernateException e)      {
+            //Step-3: Implementation
+            System.out.println("----open session--------------------" + e.getMessage());
+            session = sessionFactory.openSession();
+        }
         T t = (T)session.get(persistClass, id);
         session.close();
         return t;

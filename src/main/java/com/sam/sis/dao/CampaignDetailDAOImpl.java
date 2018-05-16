@@ -7,12 +7,15 @@ package com.sam.sis.dao;
 
 import com.sam.sis.entity.CampaignDetail;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Sam
  */
+
 @Repository
+@Transactional
 public class CampaignDetailDAOImpl extends GenericDAOImpl<CampaignDetail> implements CampaignDetailDAO<CampaignDetail>{
     
 }

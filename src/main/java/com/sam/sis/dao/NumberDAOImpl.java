@@ -7,11 +7,13 @@ package com.sam.sis.dao;
 
 import com.sam.sis.entity.Numbers;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 /**
  *
  * @author Sam
  */
 @Repository
+@Transactional
 public class NumberDAOImpl extends GenericDAOImpl<Numbers> implements NumberDAO<Numbers>{
     
 }

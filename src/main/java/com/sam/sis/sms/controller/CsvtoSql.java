@@ -46,8 +46,11 @@ public class CsvtoSql {
     @RequestMapping(value = "/CsvtoSql", method = RequestMethod.GET)
     String loadNumbers(@RequestParam(value = "campaignId") int campaignId,
             @RequestParam(value = "smsText") String smsText) throws IOException {
-
-        String fileNameDefined = "C:/Users/Sam/Documents/numbers.csv";
+        CampaignDetail Campaign0 = (CampaignDetail) campaignDAO.getbyId(campaignId);
+        System.out.println("getfile path is:" + Campaign0.getFilePath());
+        String fnd = Campaign0.getFilePath();
+        String fileNameDefined = fnd;
+        //String fileNameDefined = "/home/sam/Downloads/numbers.csv";
         //updating running status
         CampaignDetail campaign = new CampaignDetail();
         campaign.setId(campaignId);
@@ -75,7 +78,7 @@ public class CsvtoSql {
                 campaign1.setId(campaignId);
 
                 Numbers numberObj = new Numbers();
-
+                System.out.println("kannelservice cur number" + number);
                 numberObj.setMobileNumber(number);
                 numberObj.setSmsText(smsText);
                 numberObj.setCampaignId(campaign1);

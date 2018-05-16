@@ -49,5 +49,9 @@
     
  }
 
-
+#message{
+    color: red;
+    background-color: cornsilk;
+    margin: 3px 0 3px 0;
+}
 

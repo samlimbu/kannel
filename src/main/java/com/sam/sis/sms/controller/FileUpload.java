@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -47,15 +48,11 @@ public class FileUpload {
             @RequestParam("campaignName") String campaignName,
             @RequestParam("smsText") String smsText,
             @RequestParam("uploadedFile") MultipartFile uploadedFileRef ) {
-    //inert into campaign
-        CampaignDetail campaign = new CampaignDetail();
-        campaign.setId(Integer.parseInt(campaignId));
-        campaign.setCampaignName(campaignName);
-        campaign.setSms(smsText);
+    
      
         
-         campaignDAO.insert(campaign);
-        System.out.println(smsText);
+         
+ 
     // Get name of uploaded file.
     String fileName = uploadedFileRef.getOriginalFilename();
     //test
@@ -64,22 +61,31 @@ public class FileUpload {
     // Path where the uploaded file will be stored.
     //C:\Users\Sam\Documents\
     // /home/sam/Downloads
-    String path = "C:/Users/Sam/Documents/" + fileName;
+    String path = "/home/sam/Downloads/" + fileName;
     System.out.println("file path is " + path);
+    //
+    
+    //insert into campaign
+        CampaignDetail campaign = new CampaignDetail();
+        campaign.setId(Integer.parseInt(campaignId));
+        campaign.setCampaignName(campaignName);
+        campaign.setSms(smsText);
+        campaign.setFilePath(path);
+    campaignDAO.insert(campaign);
     // This buffer will store the data read from 'uploadedFileRef'
     byte[] buffer = new byte[1000];
     
     // Now create the output file on the server.
     File outputFile = new File(path);
 
-    FileInputStream reader = null;
+    InputStream reader = null;
     FileOutputStream writer = null;
     int totalBytes = 0;
     try {
         outputFile.createNewFile();
 
         // Create the input stream to uploaded file to read data from it.
-        reader = (FileInputStream) uploadedFileRef.getInputStream();
+        reader = uploadedFileRef.getInputStream();
 
         // Create writer for 'outputFile' to write data read from
         // 'uploadedFileRef'
@@ -96,15 +102,7 @@ public class FileUpload {
     } catch (IOException e) {
         e.printStackTrace();
     }
-    finally{
-        try {
-            reader.close();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-        
+           
         return "success";
     }
     

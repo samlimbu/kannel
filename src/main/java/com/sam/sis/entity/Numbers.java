@@ -7,6 +7,7 @@ package com.sam.sis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -24,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  *
@@ -35,7 +37,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Numbers.findAll", query = "SELECT n FROM Numbers n")})
 public class Numbers implements Serializable {
 
-    @Column(name = "sendstatus")
+    @Column(name = "sendstatus", updatable = false)
     private Integer sendstatus;
     @Column(name = "delivery_response")
     private Integer deliveryResponse;
@@ -46,19 +48,20 @@ public class Numbers implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "mobile_number")
+    @Column(name = "mobile_number",updatable = false)
     private String mobileNumber;
     @Size(max = 128)
-    @Column(name = "sms_text")
+    @Column(name = "sms_text", updatable = false)
     private String smsText;
     @Basic(optional = false)
 
-    @Column(name = "sent_date_time")
+    @Column(name = "sent_date_time", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date sentDateTime;
     @Basic(optional = false)
 
     @Column(name = "delivery_datetime")
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date deliveryDatetime;
     @JoinColumn(name = "campaign_id", referencedColumnName = "id")
@@ -114,6 +117,7 @@ public class Numbers implements Serializable {
 
 
     public Date getDeliveryDatetime() {
+        
         return deliveryDatetime;
     }
 

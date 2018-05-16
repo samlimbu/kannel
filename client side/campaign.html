@@ -1,0 +1,45 @@
+<<!DOCTYPE html>
+     <html>
+
+     <head>
+          <meta charset="utf-8" />
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <title>Page Title</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     </head>
+
+     <body>
+          
+          <button id="click-button">Create New Campaign</button>
+          <a href="report.html">ReportPage</a>
+          <!--http://127.0.0.1:8080/sms/multipart/form-data-->
+          <div id="message"></div>
+          
+          <div id="campaign-form">
+                    
+               <form action="http://127.0.0.1:8080/sms/upload" enctype="multipart/form-data" method="post" target="hiddenFrame" method="post" id="form"> 
+                    Campaign Id <input type="text" name="campaignId" placeholder="Campaign Id"><br>
+                    Campaign Name <input type="text" name="campaignName" placeholder="Campaign Name"><br>
+                    SMS Text <input type="text" name="smsText" placeholder="SMS Text"><br>
+
+                    <input type="file" name="uploadedFile"><br>
+                    <input type="submit" value="Submit">
+                    
+
+               </form>
+               <button id="cancel-button">Cancel</button>
+          </div>
+
+          <div id="campaign-container"></div>
+
+
+
+
+
+          Status: 1-running, 2-completed
+          <script src="js/main.js"></script>
+     </body>
+
+     </html>
